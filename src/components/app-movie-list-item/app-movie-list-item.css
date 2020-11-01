@@ -1,0 +1,35 @@
+
+li{
+    list-style-type: none;
+}
+.app-movie-list-item{
+    display: flex;
+    flex-flow:row wrap;
+}
+.app-movie-list-item__img{
+    flex:0 0 25%;
+}
+.app-movie-list-item__img>img{
+    width:7em;
+}
+h3{
+    flex:0 0 100%;
+}
+.app-movie-list-item__main-info{
+    flex:0 0 70%;
+}
+.app-movie-list-item__main-info>*{
+    padding:0;
+    margin:0;
+}
+.app-movie-list-item__facts>*{
+margin:0;
+padding:0;
+font-size: 0.8em;
+}
+.app-movie-list-item__favorite{
+    width:30px;
+}
+.app-movie-list-item__favorite>i{
+    cursor: pointer;
+}

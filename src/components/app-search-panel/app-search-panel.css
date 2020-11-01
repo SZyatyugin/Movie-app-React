@@ -1,0 +1,11 @@
+.app-form{
+    display: flex;
+    width:100%;
+
+}
+.app-form__search{
+    flex:1 0;
+}
+.app-form__btn-search{
+    margin-left:1em
+}
