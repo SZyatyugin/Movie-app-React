@@ -50,23 +50,41 @@ getDataFromAPI=(value)=>{
 }
 addToFavorite=(id)=>{
   let {store}=this.state;
-  let findFilmIndex=store.findIndex((elem,index)=>{if(elem.imdbID===id)return index});
-  let film=store.splice(findFilmIndex,1);
-  store.unshift(...film);
- 
-let filmsToMakeFavorite=store.map((elem)=>{
-  if(elem.imdbID===id){
-    if(elem.addToFavorite){
-      elem.addToFavorite=false;
-    }else{
-      elem.addToFavorite=true;
-    }
-  } 
-  return elem
-});
-console.log(filmsToMakeFavorite)
+  let findFilm=store.find(elem=>elem.imdbID===id);
 
-this.setState({store:filmsToMakeFavorite})
+  if(!findFilm.addToFavorite){
+    let findFilmIndex=store.findIndex((elem,index)=>{if(elem.imdbID===id)return index});
+    let film=store.splice(findFilmIndex,1);
+    store.unshift(...film);
+   
+  let filmsToMakeFavorite=store.map((elem)=>{
+    if(elem.imdbID===id){
+      if(elem.addToFavorite){
+        elem.addToFavorite=false;
+      }else{
+        elem.addToFavorite=true;
+      }
+    } 
+    return elem
+  });
+  this.setState({store:filmsToMakeFavorite})
+  }else{
+    let filmsToMakeFavorite=store.map((elem)=>{
+      if(elem.imdbID===id){
+        if(elem.addToFavorite){
+          elem.addToFavorite=false;
+        }else{
+          elem.addToFavorite=true;
+        }
+      } 
+      return elem
+    });
+    let favoriteFilms=filmsToMakeFavorite.filter(elem=>elem.addToFavorite);
+    let notFavoriteFilms=filmsToMakeFavorite.filter(elem=>!elem.addToFavorite);
+    let films=[...favoriteFilms,...notFavoriteFilms];
+    this.setState({store:films})
+  }
+ 
 }
 
   render(){ 
