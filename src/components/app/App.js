@@ -2,7 +2,11 @@ import React from 'react';
 import AppHeader from '../app-header';
 import AppSearchPanel from '../app-search-panel';
 import AppMovieList from '../app-movie-list';
-import './app.css'
+import Appsevices from '../app-services'
+import './app.css';
+
+let appservices=new Appsevices();
+
 class App extends React.Component{
 constructor(props){
   super();
@@ -17,46 +21,41 @@ getInputValue=(value)=>{
   this.setState(({valueForSearch})=>{
     return {valueForSearch:value}
   });
-this.getDataFromAPI(value)
+  this.getData(value);
+
 }
-getDataFromAPI=(value)=>{
-  if(!value){
-    return
-  }
-  let val=value.split(' ').join('+');
-  let url=`http://www.omdbapi.com/?apikey=fd4e62ba&t=${val}`;
-  fetch(url).then(response=>response.json())
+getData=async(value)=>{
+
+  await appservices.getDataFromAPI(value)
   .then((result)=>{
-    if(result.Response!=='False'){
-      this.setState({error:''})
+    console.log(result)
+    if(result.Response==='False'){
+      this.setState({error:result.Error});
+    }else{
+      this.setState({error:''});
       this.setState({data:result})
       let films=[...this.state.store];
-      let check=films.find((elem)=>{
-        if(elem.imdbID===result.imdbID){
+      let checkFilm=films.find((elem)=>{
+        if(elem.imdbID===this.state.data.imdbID){
           return elem
         }
       });
-      if(check){
-        return
+      if(checkFilm){
+return
       }else{
         films.push({...this.state.data,addToFavorite:false});
         this.setState({store:films})
       }
-    }else{
-      this.setState({error:result.Error})
+    };
     }
-})
-  .catch(error=>alert(`There is an error ${error}`))
+  )
+  .catch((error)=>{
+    alert(`There is an error ${error}`)
+  })
 }
 addToFavorite=(id)=>{
   let {store}=this.state;
   let findFilm=store.find(elem=>elem.imdbID===id);
-
-  if(!findFilm.addToFavorite){
-    let findFilmIndex=store.findIndex((elem,index)=>{if(elem.imdbID===id)return index});
-    let film=store.splice(findFilmIndex,1);
-    store.unshift(...film);
-   
   let filmsToMakeFavorite=store.map((elem)=>{
     if(elem.imdbID===id){
       if(elem.addToFavorite){
@@ -67,24 +66,18 @@ addToFavorite=(id)=>{
     } 
     return elem
   });
-  this.setState({store:filmsToMakeFavorite})
+  if(findFilm.addToFavorite){
+    let findFilmIndex=store.findIndex((elem,index)=>{if(elem.imdbID===id)return index});
+    let films=[...store];
+    let favoriteFilm=films.splice(findFilmIndex,1);
+    let newArrayOfFilms=[...favoriteFilm,...films];
+  this.setState({store:newArrayOfFilms})
   }else{
-    let filmsToMakeFavorite=store.map((elem)=>{
-      if(elem.imdbID===id){
-        if(elem.addToFavorite){
-          elem.addToFavorite=false;
-        }else{
-          elem.addToFavorite=true;
-        }
-      } 
-      return elem
-    });
     let favoriteFilms=filmsToMakeFavorite.filter(elem=>elem.addToFavorite);
     let notFavoriteFilms=filmsToMakeFavorite.filter(elem=>!elem.addToFavorite);
     let films=[...favoriteFilms,...notFavoriteFilms];
     this.setState({store:films})
   }
- 
 }
 
   render(){ 

@@ -4,9 +4,7 @@ import AppMovieListItem from '../app-movie-list-item'
 import './app-movie-list.css'
 
 class AppMovieList extends React.Component{
-constructor(props){
-    super()
-}
+
    render(){
         let {store,error,addToFavorite}=this.props;
   return  (
