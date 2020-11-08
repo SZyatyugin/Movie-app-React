@@ -7,7 +7,7 @@ class AppMovieListItem extends React.Component {
         super(props);
     }
     render() {
-        const { store, addToFavorite, } = this.props;
+        const { store, addToFavorite } = this.props;
         return store.map((elem) => {
             return (
                 <li key={elem.imdbID} className="app-movie-list-item">
@@ -45,6 +45,6 @@ class AppMovieListItem extends React.Component {
 }
 AppMovieListItem.propTypes = {
     store: PropTypes.array,
-    addToFavorite: PropTypes.func,
+    addToFavorite: PropTypes.func
 };
 export default AppMovieListItem;

@@ -5,7 +5,7 @@ import "./app-movie-list.css";
 
 class AppMovieList extends React.Component {
     render() {
-        let { store, error, addToFavorite, } = this.props;
+        let { store, error, addToFavorite } = this.props;
         return (
             <div className="app-movie-list">
                 <ul>
@@ -25,6 +25,6 @@ class AppMovieList extends React.Component {
 AppMovieList.propTypes = {
     store: PropTypes.array,
     error: PropTypes.string,
-    addToFavorite: PropTypes.func,
+    addToFavorite: PropTypes.func
 };
 export default AppMovieList;

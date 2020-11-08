@@ -14,24 +14,23 @@ class App extends React.Component {
             valueForSearch: "",
             data: {},
             store: [],
-            error: "",
+            error: ""
         };
     }
     getInputValue = (value) => {
-        this.setState({valueForSearch: value,});
+        this.setState({ valueForSearch: value });
         this.getData(value);
     };
     getData = async (value) => {
         await appservices
             .getDataFromAPI(value)
             .then((result) => {
-
                 if (result.Response === "False") {
-                    this.setState({ error: result.Error, });
+                    this.setState({ error: result.Error });
                 } else {
-                    this.setState({ error: "", });
-                    this.setState({ data: result, });
-                    let films = [...this.state.store,];
+                    this.setState({ error: "" });
+                    this.setState({ data: result });
+                    let films = [...this.state.store];
                     let checkFilm = films.find((elem) => {
                         if (elem.imdbID === this.state.data.imdbID) {
                             return elem;
@@ -42,9 +41,9 @@ class App extends React.Component {
                     } else {
                         films.push({
                             ...this.state.data,
-                            addToFavorite: false,
+                            addToFavorite: false
                         });
-                        this.setState({ store: films, });
+                        this.setState({ store: films });
                     }
                 }
             })
@@ -53,7 +52,7 @@ class App extends React.Component {
             });
     };
     addToFavorite = (id) => {
-        let { store, } = this.state;
+        let { store } = this.state;
         let findFilm = store.find((elem) => elem.imdbID === id);
         let filmsToMakeFavorite = store.map((elem) => {
             if (elem.imdbID === id) {
@@ -69,10 +68,10 @@ class App extends React.Component {
             let findFilmIndex = store.findIndex((elem, index) => {
                 if (elem.imdbID === id) return index;
             });
-            let films = [...store,];
+            let films = [...store];
             let favoriteFilm = films.splice(findFilmIndex, 1);
-            let newArrayOfFilms = [...favoriteFilm, ...films,];
-            this.setState({ store: newArrayOfFilms, });
+            let newArrayOfFilms = [...favoriteFilm, ...films];
+            this.setState({ store: newArrayOfFilms });
         } else {
             let favoriteFilms = filmsToMakeFavorite.filter(
                 (elem) => elem.addToFavorite
@@ -80,8 +79,8 @@ class App extends React.Component {
             let notFavoriteFilms = filmsToMakeFavorite.filter(
                 (elem) => !elem.addToFavorite
             );
-            let films = [...favoriteFilms, ...notFavoriteFilms,];
-            this.setState({ store: films, });
+            let films = [...favoriteFilms, ...notFavoriteFilms];
+            this.setState({ store: films });
         }
     };
 
