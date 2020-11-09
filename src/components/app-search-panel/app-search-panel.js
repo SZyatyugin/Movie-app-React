@@ -6,7 +6,7 @@ class AppSearchPanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            inputValue: ""
+            inputValue: "",
         };
     }
 
@@ -43,6 +43,6 @@ class AppSearchPanel extends React.Component {
     }
 }
 AppSearchPanel.propTypes = {
-    getInputValue: PropTypes.func.isRequired
+    getInputValue: PropTypes.func.isRequired,
 };
 export default AppSearchPanel;

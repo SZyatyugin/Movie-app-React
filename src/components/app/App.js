@@ -14,7 +14,7 @@ class App extends React.Component {
             valueForSearch: "",
             data: {},
             store: [],
-            error: ""
+            error: "",
         };
     }
     getInputValue = (value) => {
@@ -41,7 +41,7 @@ class App extends React.Component {
                     } else {
                         films.push({
                             ...this.state.data,
-                            addToFavorite: false
+                            addToFavorite: false,
                         });
                         this.setState({ store: films });
                     }

@@ -45,6 +45,6 @@ class AppMovieListItem extends React.Component {
 }
 AppMovieListItem.propTypes = {
     store: PropTypes.array,
-    addToFavorite: PropTypes.func
+    addToFavorite: PropTypes.func,
 };
 export default AppMovieListItem;
